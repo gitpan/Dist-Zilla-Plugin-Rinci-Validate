@@ -1,5 +1,15 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.02     2012-11-06 (SHARYANTO)
+
+         - Add # NO_VALIDATE_ARG(S?)
+
+         - Add notice about setting _perinci.sub.wrapper.validate_args => 0 if
+           validated arguments.
+
+         - Some fixes.
+
+
 0.01     2012-11-06 (SHARYANTO)
 
          First release.

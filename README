@@ -3,7 +3,7 @@ NAME
     output code
 
 VERSION
-    version 0.01
+    version 0.02
 
 SYNOPSIS
     In dist.ini:
@@ -75,6 +75,19 @@ DESCRIPTION
     Perinci::Sub::Wrapper to skip generating argument validation code when
     your function is wrapped, as argument validation is already done by the
     generated code.
+
+    If there is an unvalidated argument, this plugin will emit a warning
+    notice. To skip validating an argument (silence the warning), you can
+    use:
+
+     sub foo {
+         my %args = @_;
+         my $arg1 = $args{arg1}; # NO_VALIDATE_ARG
+
+    or:
+
+     sub foo {
+         # NO_VALIDATE_ARGS
 
 FAQ
   Rationale for this plugin?
