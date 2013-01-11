@@ -1,5 +1,17 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.03     2013-01-11 (SHARYANTO)
+
+         No functional changes.
+
+         [BUG FIXES]
+
+         - Make sure data_name is alphanum only (foo.contains -> foo_contains).
+
+         - Wrapping fixes (declare variables and require modules required by the
+           generated validator code).
+
+
 0.02     2012-11-06 (SHARYANTO)
 
          - Add # NO_VALIDATE_ARG(S?)

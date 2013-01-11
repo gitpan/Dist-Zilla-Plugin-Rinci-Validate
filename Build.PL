@@ -17,13 +17,13 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Dist-Zilla-Plugin-Rinci-Validate",
-  "dist_version" => "0.02",
+  "dist_version" => "0.03",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Plugin::Rinci::Validate",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
-    "Data::Sah" => "0.08",
+    "Data::Sah" => "0.10",
     "Dist::Zilla" => 0,
     "Log::Any" => 0,
     "Perinci::Access::InProcess" => "0.38"
