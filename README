@@ -3,7 +3,7 @@ NAME
     output code
 
 VERSION
-    version 0.03
+    version 0.04
 
 SYNOPSIS
     In dist.ini:
@@ -37,6 +37,14 @@ SYNOPSIS
          my %args = @_;
 
          my $arg1 = $args{arg1}; require Scalar::Util; my $arg_err; (($arg1 //= 3), 1) && ((defined($arg1)) ? 1 : (($err_arg1 = 'TMPERRMSG: required data not specified'),0)) && ((Scalar::Util::looks_like_number($arg1) =~ /^(?:1|2|9|10|4352)$/) ? 1 : (($err_arg1 = 'TMPERRMSG: type check failed'),0)); return [400, "Invalid value for arg1: $err_arg1"] if $arg1; # VALIDATE_ARG
+         ...
+     }
+
+    You can also validate all arguments:
+
+     sub foo {
+         my %args = @_; # VALIDATE_ARGS
+
          ...
      }
 
@@ -128,6 +136,8 @@ TODO
     *   Option to not compress validator code to a single line.
 
     *   Option to configure variable name to store validation ($arg_err).
+
+    *   Option to reuse code for the same schema.
 
 AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>

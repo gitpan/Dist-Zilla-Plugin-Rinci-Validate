@@ -17,7 +17,7 @@ my $pa  = Perinci::Access::InProcess->new(
     extra_wrapper_args => {remove_internal_properties=>0},
 );
 
-our $VERSION = '0.03'; # VERSION
+our $VERSION = '0.04'; # VERSION
 
 use Moose;
 use namespace::autoclean;
@@ -187,8 +187,10 @@ sub munge_file {
                 }
                 push @code, 'my $arg_err; ' unless keys %vargs;
                 $vargs{$arg} = 1;
+                push @code, "if (exists($kvar)) { " if !$as->{req};
                 push @code, __squish_code($cd->{result}), "; ";
                 push @code, $gen_verr->('$arg_err', $arg);
+                push @code, "}"                     if !$as->{req};
             }
         }
         join "", @code;
@@ -334,7 +336,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -369,6 +371,14 @@ output will be something like:
      my %args = @_;
 
      my $arg1 = $args{arg1}; require Scalar::Util; my $arg_err; (($arg1 //= 3), 1) && ((defined($arg1)) ? 1 : (($err_arg1 = 'TMPERRMSG: required data not specified'),0)) && ((Scalar::Util::looks_like_number($arg1) =~ /^(?:1|2|9|10|4352)$/) ? 1 : (($err_arg1 = 'TMPERRMSG: type check failed'),0)); return [400, "Invalid value for arg1: $err_arg1"] if $arg1; # VALIDATE_ARG
+     ...
+ }
+
+You can also validate all arguments:
+
+ sub foo {
+     my %args = @_; # VALIDATE_ARGS
+
      ...
  }
 
@@ -442,10 +452,10 @@ L<Perinci::Exporter> or by calling Perinci::Sub::Wrapper's C<wrap_sub> directly.
 
 =head2 But why use Rinci metadata or Sah schema?
 
-In short, adding Rinci metadata to your subroutines allows various tools to do
-useful stuffs, relieving you from doing those stuffs manually. Using Sah schema
-allows you to write validation code succintly, and gives you the ability to
-automatically generate Perl/JavaScript/error messages from the schema.
+In short, adding L<Rinci> metadata to your subroutines allows various tools to
+do useful stuffs, relieving you from doing those stuffs manually. Using L<Sah>
+schema allows you to write validation code succintly, and gives you the ability
+to automatically generate Perl/JavaScript/error messages from the schema.
 
 See their respective documentation for more details.
 
@@ -464,6 +474,8 @@ option to not compress everything as a single line might be added in the future.
 =item * Option to not compress validator code to a single line.
 
 =item * Option to configure variable name to store validation (C<$arg_err>).
+
+=item * Option to reuse code for the same schema.
 
 =back
 

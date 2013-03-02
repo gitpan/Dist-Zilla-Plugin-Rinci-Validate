@@ -1,5 +1,13 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.04     2013-03-02 (SHARYANTO)
+
+         [BUG FIXES]
+
+         - Don't validate non-required (req=>0) arguments if they are not
+           passed.
+
+
 0.03     2013-01-11 (SHARYANTO)
 
          No functional changes.
