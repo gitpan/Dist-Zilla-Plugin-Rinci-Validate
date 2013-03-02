@@ -1,5 +1,13 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.05     2013-03-02 (SHARYANTO)
+
+         [BUG FIXES]
+
+         - Validate (to set default value) non-required arguments if their
+           schemas specify default values.
+
+
 0.04     2013-03-02 (SHARYANTO)
 
          [BUG FIXES]

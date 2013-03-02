@@ -17,7 +17,7 @@ my $pa  = Perinci::Access::InProcess->new(
     extra_wrapper_args => {remove_internal_properties=>0},
 );
 
-our $VERSION = '0.04'; # VERSION
+our $VERSION = '0.05'; # VERSION
 
 use Moose;
 use namespace::autoclean;
@@ -154,6 +154,12 @@ sub munge_file {
         my @code;
         for my $arg (keys %{ $meta->{args} }) {
             my $as = $meta->{args}{$arg};
+            my $s = $meta->{args}{$arg}{schema};
+            my $sn;
+            if ($s) {
+                $sn = $sah->normalize_schema($s);
+            }
+            my $has_default = $sn && defined($sn->[1]{default});
             my $kvar; # var to access a hash key
             $kvar = $var; $kvar =~ s/.//;
             $kvar = join(
@@ -165,11 +171,11 @@ sub munge_file {
             if ($as->{req}) {
                 push @code, $gen_merr->("!exists($kvar)", $arg);
             }
-            my $s = $meta->{args}{$arg}{schema};
-            if ($s) {
+            if ($sn) {
                 my $dn = $arg; $dn =~ s/\W+/_/g;
                 my $cd = $plc->compile(
-                    schema      => $s,
+                    schema      => $sn,
+                    schema_is_normalized => 1,
                     err_term    => '$arg_err',
                     data_name   => $dn,
                     data_term   => $kvar,
@@ -187,10 +193,11 @@ sub munge_file {
                 }
                 push @code, 'my $arg_err; ' unless keys %vargs;
                 $vargs{$arg} = 1;
-                push @code, "if (exists($kvar)) { " if !$as->{req};
+                my $wrap = !$as->{req} && !$has_default;
+                push @code, "if (exists($kvar)) { " if $wrap;
                 push @code, __squish_code($cd->{result}), "; ";
                 push @code, $gen_verr->('$arg_err', $arg);
-                push @code, "}"                     if !$as->{req};
+                push @code, "}"                     if $wrap;
             }
         }
         join "", @code;
@@ -336,7 +343,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
