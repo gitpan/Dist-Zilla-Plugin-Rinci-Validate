@@ -6,18 +6,18 @@ use warnings;
 use Log::Any '$log';
 
 use Data::Sah;
-use Perinci::Access::InProcess;
+use Perinci::Access::Perl;
 
 my $sah = Data::Sah->new();
 my $plc = $sah->get_compiler("perl");
 $plc->indent_character('');
-my $pa  = Perinci::Access::InProcess->new(
+my $pa  = Perinci::Access::Perl->new(
     load               => 0,
     cache_size         => 0,
     extra_wrapper_args => {remove_internal_properties=>0},
 );
 
-our $VERSION = '0.05'; # VERSION
+our $VERSION = '0.06'; # VERSION
 
 use Moose;
 use namespace::autoclean;
@@ -51,6 +51,7 @@ sub munge_file {
 
     my $fname = $file->name;
     $log->tracef("Processing file %s ...", $fname);
+    $self->log("Processing file $fname ...");
 
     unless ($fname =~ m!lib/(.+\.pm)$!) {
         #$self->log_debug("Skipping: '$fname' not a module");
@@ -333,8 +334,8 @@ __PACKAGE__->meta->make_immutable;
 1;
 # ABSTRACT: Insert argument validator code in output code
 
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -343,7 +344,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -498,4 +499,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

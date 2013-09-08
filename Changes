@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.06     2013-09-08 (SHARYANTO)
+
+         - No functional changes. Replace Perinci::Access::InProcess with
+           ::Perl.
+
+
 0.05     2013-03-02 (SHARYANTO)
 
          [BUG FIXES]
