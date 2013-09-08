@@ -17,7 +17,7 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Dist-Zilla-Plugin-Rinci-Validate",
-  "dist_version" => "0.06",
+  "dist_version" => "0.07",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Plugin::Rinci::Validate",
   "recommends" => {},

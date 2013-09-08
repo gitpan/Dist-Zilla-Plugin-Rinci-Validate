@@ -17,7 +17,7 @@ my $pa  = Perinci::Access::Perl->new(
     extra_wrapper_args => {remove_internal_properties=>0},
 );
 
-our $VERSION = '0.06'; # VERSION
+our $VERSION = '0.07'; # VERSION
 
 use Moose;
 use namespace::autoclean;
@@ -219,7 +219,7 @@ sub munge_file {
         if (/^\s*package \s+ (\w+(?:::\w+)*)/x) {
             $pkg_name = $1;
             $log->tracef("Found package declaration %s", $pkg_name);
-            my $uri = "/$pkg_name/"; $uri =~ s!::!/!g;
+            my $uri = "pl:/$pkg_name/"; $uri =~ s!::!/!g;
             my $res = $pa->request(child_metas => $uri);
             unless ($res->[0] == 200) {
                 $self->log_fatal(
@@ -344,7 +344,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
