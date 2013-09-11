@@ -20,14 +20,14 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Dist::Zilla::Plugin::Rinci::Validate",
   "PREREQ_PM" => {
-    "Data::Sah" => "0.10",
+    "Data::Sah" => "0.18",
     "Dist::Zilla" => 0,
     "Log::Any" => 0,
     "Perinci::Access::Perl" => "0.38",
     "experimental" => 0
   },
   "TEST_REQUIRES" => {},
-  "VERSION" => "0.08",
+  "VERSION" => "0.09",
   "test" => {
     "TESTS" => "t/*.t"
   }

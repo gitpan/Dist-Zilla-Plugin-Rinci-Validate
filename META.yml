@@ -13,7 +13,7 @@ meta-spec:
   version: 1.4
 name: Dist-Zilla-Plugin-Rinci-Validate
 requires:
-  Data::Sah: 0.10
+  Data::Sah: 0.18
   Dist::Zilla: 0
   Log::Any: 0
   Perinci::Access::Perl: 0.38
@@ -22,4 +22,4 @@ requires:
 resources:
   homepage: http://metacpan.org/release/Dist-Zilla-Plugin-Rinci-Validate
   repository: http://github.com/sharyanto/perl-Dist-Zilla-Plugin-Rinci-Validate
-version: 0.08
+version: 0.09

@@ -17,7 +17,7 @@ my $pa  = Perinci::Access::Perl->new(
     extra_wrapper_args => {remove_internal_properties=>0},
 );
 
-our $VERSION = '0.08'; # VERSION
+our $VERSION = '0.09'; # VERSION
 
 use Moose;
 use experimental 'smartmatch';
@@ -137,7 +137,7 @@ sub munge_file {
         );
         my @code;
         for (@{$cd->{modules}}) {
-            push @code, "require $_; " unless $_ ~~ @modules;
+            push @code, $plc->stmt_require_module($_, $cd) unless $_ ~~ @modules;
             push @modules, $_;
         }
         for (sort keys %{$cd->{vars}}) {
@@ -185,7 +185,7 @@ sub munge_file {
                     comment     => 0,
                 );
                 for (@{$cd->{modules}}) {
-                    push @code, "require $_; " unless $_ ~~ @modules;
+                    push @code, $plc->stmt_require_module($_, $cd) unless $_ ~~ @modules;
                     push @modules, $_;
                 }
                 for (sort keys %{$cd->{vars}}) {
@@ -345,7 +345,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 SYNOPSIS
 
