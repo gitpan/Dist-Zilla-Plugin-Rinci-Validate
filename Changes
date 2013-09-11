@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.08     2013-09-11 (SHARYANTO)
+
+         - No functional changes. Add 'use experimental smartmatch' for Perl
+           5.18+".
+
+
 0.07     2013-09-08 (SHARYANTO)
 
          - Bugfix: make sure all uri's fed to Perinci::Access::Perl are pl: uris.

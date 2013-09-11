@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::Rinci::Validate;
 
-use 5.010;
+use 5.010001;
 use strict;
 use warnings;
 use Log::Any '$log';
@@ -17,9 +17,10 @@ my $pa  = Perinci::Access::Perl->new(
     extra_wrapper_args => {remove_internal_properties=>0},
 );
 
-our $VERSION = '0.07'; # VERSION
+our $VERSION = '0.08'; # VERSION
 
 use Moose;
+use experimental 'smartmatch';
 use namespace::autoclean;
 
 with (
@@ -344,7 +345,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 

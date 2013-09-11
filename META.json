@@ -4,7 +4,7 @@
       "Steven Haryanto <stevenharyanto@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.132140",
+   "generated_by" : "Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.131560",
    "license" : [
       "perl_5"
    ],
@@ -14,14 +14,9 @@
    },
    "name" : "Dist-Zilla-Plugin-Rinci-Validate",
    "prereqs" : {
-      "build" : {
-         "requires" : {
-            "Module::Build" : "0.3601"
-         }
-      },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.3601"
+            "ExtUtils::MakeMaker" : "6.30"
          }
       },
       "develop" : {
@@ -37,14 +32,9 @@
             "Data::Sah" : "0.10",
             "Dist::Zilla" : "0",
             "Log::Any" : "0",
-            "Perinci::Access::Perl" : "0.38"
-         }
-      },
-      "test" : {
-         "requires" : {
-            "Capture::Tiny" : "0",
-            "Test::More" : "0.88",
-            "blib" : "0"
+            "Perinci::Access::Perl" : "0.38",
+            "experimental" : "0",
+            "perl" : "5.010001"
          }
       }
    },
@@ -55,6 +45,6 @@
          "url" : "http://github.com/sharyanto/perl-Dist-Zilla-Plugin-Rinci-Validate"
       }
    },
-   "version" : "0.07"
+   "version" : "0.08"
 }
 
