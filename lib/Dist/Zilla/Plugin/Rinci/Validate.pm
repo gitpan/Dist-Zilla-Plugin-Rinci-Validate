@@ -3,7 +3,6 @@ package Dist::Zilla::Plugin::Rinci::Validate;
 use 5.010001;
 use strict;
 use warnings;
-use Log::Any '$log';
 
 use Data::Sah;
 use Perinci::Access::Perl;
@@ -17,7 +16,7 @@ my $pa  = Perinci::Access::Perl->new(
     extra_wrapper_args => {remove_internal_properties=>0},
 );
 
-our $VERSION = '0.09'; # VERSION
+our $VERSION = '0.10'; # VERSION
 
 use Moose;
 use experimental 'smartmatch';
@@ -51,8 +50,7 @@ sub munge_file {
     my ($self, $file) = @_;
 
     my $fname = $file->name;
-    $log->tracef("Processing file %s ...", $fname);
-    $self->log("Processing file $fname ...");
+    $self->log_debug("Processing file $fname ...");
 
     unless ($fname =~ m!lib/(.+\.pm)$!) {
         #$self->log_debug("Skipping: '$fname' not a module");
@@ -96,7 +94,8 @@ sub munge_file {
         }
         if (keys %unvalidated) {
             $self->log("NOTICE: $fname: Some argument(s) not validated ".
-                           "for sub $sub_name: ".join(", ", keys %unvalidated));
+                           "for sub $sub_name: ".
+                               join(", ", sort keys %unvalidated));
         } elsif ((grep {$_==1} values %vargs) &&
                      !defined($meta->{"_perinci.sub.wrapper.validate_args"})) {
             $self->log(
@@ -154,7 +153,7 @@ sub munge_file {
 
     my $gen_args = sub {
         my @code;
-        for my $arg (keys %{ $meta->{args} }) {
+        for my $arg (sort keys %{ $meta->{args} }) {
             my $as = $meta->{args}{$arg};
             my $s = $meta->{args}{$arg}{schema};
             my $sn;
@@ -207,7 +206,6 @@ sub munge_file {
 
     for (@content) {
         $i++;
-        #$log->tracef("Line $i: %s", $_);
         if (/^=cut\b/x) {
             $in_pod = 0;
             next;
@@ -219,7 +217,7 @@ sub munge_file {
         }
         if (/^\s*package \s+ (\w+(?:::\w+)*)/x) {
             $pkg_name = $1;
-            $log->tracef("Found package declaration %s", $pkg_name);
+            $self->log_debug("Found package declaration $pkg_name");
             my $uri = "pl:/$pkg_name/"; $uri =~ s!::!/!g;
             my $res = $pa->request(child_metas => $uri);
             unless ($res->[0] == 200) {
@@ -230,13 +228,13 @@ sub munge_file {
             }
             $metas = {};
             for (keys %{$res->[2]}) {
-                next unless m!.+/(\w+)$!;
+                next unless m!\A\w+\z!; # function
                 $metas->{$1} = $res->[2]{$_};
             }
             next;
         }
         if (/^\s*sub \s+ (\w+)/x) {
-            $log->tracef("Found sub declaration %s", $1);
+            $self->log_debug("Found sub declaration $1");
             unless ($pkg_name) {
                 $self->log_fatal(
                     "$fname:$i: module does not have package definition");
@@ -255,7 +253,8 @@ sub munge_file {
              (?<tag>\#\s*(?<no>NO_)?VALIDATE_ARG(?<s> S)?
                  (?: \s+ (?<var2>\w+))? \s*$)/x) {
             my %m = %+;
-            $log->tracef("Found line with tag %s, m=%s", $_, \%m);
+            $self->log_debug("Found line with tag $_, m=" .
+                                 join(', ', map {"$_=>$m{$_}"} keys %m));
             next if !$m{no} && !$m{code};
             $arg = $m{var2} // $m{var};
             if ($m{no}) {
@@ -313,7 +312,6 @@ sub munge_file {
             }
 
             $munged++;
-            $log->tracef("Munging ...");
             if ($m{s}) {
                 $_ = $m{code} . $gen_args->() . "" . $m{tag};
             } else {
@@ -339,13 +337,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output code
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -487,6 +487,22 @@ option to not compress everything as a single line might be added in the future.
 =item * Option to reuse code for the same schema.
 
 =back
+
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Dist-Zilla-Plugin-Rinci-Validate>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Dist-Zilla-Plugin-Rinci-Validate>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-Rinci-Validate>
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
 
 =head1 AUTHOR
 
