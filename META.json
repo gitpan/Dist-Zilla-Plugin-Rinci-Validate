@@ -31,7 +31,7 @@
          "requires" : {
             "Data::Sah" : "0.18",
             "Dist::Zilla" : "0",
-            "Perinci::Access::Perl" : "0.38",
+            "Perinci::Access::Perl" : "0.54",
             "experimental" : "0",
             "perl" : "5.010001"
          }
@@ -57,7 +57,7 @@
          "web" : "https://github.com/sharyanto/perl-Dist-Zilla-Plugin-Rinci-Validate"
       }
    },
-   "version" : "0.10",
+   "version" : "0.11",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.010001"
@@ -65,102 +65,102 @@
       "plugins" : [
          {
             "class" : "Dist::Zilla::Plugin::GatherDir",
-            "name" : "@Filter/@Filter/GatherDir",
+            "name" : "@Author::SHARYANTO/@Filter/GatherDir",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::PruneCruft",
-            "name" : "@Filter/@Filter/PruneCruft",
+            "name" : "@Author::SHARYANTO/@Filter/PruneCruft",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::ManifestSkip",
-            "name" : "@Filter/@Filter/ManifestSkip",
+            "name" : "@Author::SHARYANTO/@Filter/ManifestSkip",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::MetaYAML",
-            "name" : "@Filter/@Filter/MetaYAML",
+            "name" : "@Author::SHARYANTO/@Filter/MetaYAML",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::License",
-            "name" : "@Filter/@Filter/License",
+            "name" : "@Author::SHARYANTO/@Filter/License",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::PodCoverageTests",
-            "name" : "@Filter/@Filter/PodCoverageTests",
+            "name" : "@Author::SHARYANTO/@Filter/PodCoverageTests",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::PodSyntaxTests",
-            "name" : "@Filter/@Filter/PodSyntaxTests",
+            "name" : "@Author::SHARYANTO/@Filter/PodSyntaxTests",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::ExtraTests",
-            "name" : "@Filter/@Filter/ExtraTests",
+            "name" : "@Author::SHARYANTO/@Filter/ExtraTests",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::ExecDir",
-            "name" : "@Filter/@Filter/ExecDir",
+            "name" : "@Author::SHARYANTO/@Filter/ExecDir",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::ShareDir",
-            "name" : "@Filter/@Filter/ShareDir",
+            "name" : "@Author::SHARYANTO/@Filter/ShareDir",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::MakeMaker",
-            "name" : "@Filter/@Filter/MakeMaker",
+            "name" : "@Author::SHARYANTO/@Filter/MakeMaker",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::Manifest",
-            "name" : "@Filter/@Filter/Manifest",
+            "name" : "@Author::SHARYANTO/@Filter/Manifest",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::ConfirmRelease",
-            "name" : "@Filter/@Filter/ConfirmRelease",
+            "name" : "@Author::SHARYANTO/@Filter/ConfirmRelease",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::UploadToCPAN",
-            "name" : "@Filter/@Filter/UploadToCPAN",
+            "name" : "@Author::SHARYANTO/@Filter/UploadToCPAN",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::Author::SHARYANTO::MetaResources",
-            "name" : "@Filter/Author::SHARYANTO::MetaResources",
+            "name" : "@Author::SHARYANTO/Author::SHARYANTO::MetaResources",
             "version" : "0.01"
          },
          {
             "class" : "Dist::Zilla::Plugin::CheckChangeLog",
-            "name" : "@Filter/CheckChangeLog",
+            "name" : "@Author::SHARYANTO/CheckChangeLog",
             "version" : "0.01"
          },
          {
             "class" : "Dist::Zilla::Plugin::CheckMetaResources",
-            "name" : "@Filter/CheckMetaResources",
+            "name" : "@Author::SHARYANTO/CheckMetaResources",
             "version" : "0.001"
          },
          {
             "class" : "Dist::Zilla::Plugin::MetaJSON",
-            "name" : "@Filter/MetaJSON",
+            "name" : "@Author::SHARYANTO/MetaJSON",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::MetaConfig",
-            "name" : "@Filter/MetaConfig",
+            "name" : "@Author::SHARYANTO/MetaConfig",
             "version" : "5.006"
          },
          {
             "class" : "Dist::Zilla::Plugin::OurPkgVersion",
-            "name" : "@Filter/OurPkgVersion",
+            "name" : "@Author::SHARYANTO/OurPkgVersion",
             "version" : "0.005000"
          },
          {
@@ -280,13 +280,18 @@
                   ]
                }
             },
-            "name" : "@Filter/PodWeaver",
+            "name" : "@Author::SHARYANTO/PodWeaver",
             "version" : "4.002"
          },
          {
             "class" : "Dist::Zilla::Plugin::ReadmeFromPod",
-            "name" : "@Filter/ReadmeFromPod",
+            "name" : "@Author::SHARYANTO/ReadmeFromPod",
             "version" : "0.18"
+         },
+         {
+            "class" : "Dist::Zilla::Plugin::Rinci::Validate",
+            "name" : "@Author::SHARYANTO/Rinci::Validate",
+            "version" : "0.10"
          },
          {
             "class" : "Dist::Zilla::Plugin::Test::Compile",
@@ -301,27 +306,27 @@
                   ]
                }
             },
-            "name" : "@Filter/Test::Compile",
+            "name" : "@Author::SHARYANTO/Test::Compile",
             "version" : "2.037"
          },
          {
             "class" : "Dist::Zilla::Plugin::Test::Rinci",
-            "name" : "@Filter/Test::Rinci",
+            "name" : "@Author::SHARYANTO/Test::Rinci",
             "version" : "0.01"
          },
          {
             "class" : "Dist::Zilla::Plugin::InstallRelease",
-            "name" : "@Filter/InstallRelease",
+            "name" : "@Author::SHARYANTO/InstallRelease",
             "version" : "0.008"
          },
          {
             "class" : "Dist::Zilla::Plugin::Run::BeforeBuild",
-            "name" : "@Filter/Run::BeforeBuild",
+            "name" : "@Author::SHARYANTO/Run::BeforeBuild",
             "version" : "0.020"
          },
          {
             "class" : "Dist::Zilla::Plugin::Run::Release",
-            "name" : "@Filter/Run::Release",
+            "name" : "@Author::SHARYANTO/Run::Release",
             "version" : "0.020"
          },
          {

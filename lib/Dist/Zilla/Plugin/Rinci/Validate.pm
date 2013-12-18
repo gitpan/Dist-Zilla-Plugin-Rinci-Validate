@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use Data::Sah;
-use Perinci::Access::Perl;
+use Perinci::Access::Perl 0.54;
 
 my $sah = Data::Sah->new();
 my $plc = $sah->get_compiler("perl");
@@ -16,7 +16,7 @@ my $pa  = Perinci::Access::Perl->new(
     extra_wrapper_args => {remove_internal_properties=>0},
 );
 
-our $VERSION = '0.10'; # VERSION
+our $VERSION = '0.11'; # VERSION
 
 use Moose;
 use experimental 'smartmatch';
@@ -226,11 +226,7 @@ sub munge_file {
                         "$res->[0] - $res->[2]");
                 return;
             }
-            $metas = {};
-            for (keys %{$res->[2]}) {
-                next unless m!\A\w+\z!; # function
-                $metas->{$1} = $res->[2]{$_};
-            }
+            $metas = $res->[2];
             next;
         }
         if (/^\s*sub \s+ (\w+)/x) {
@@ -345,7 +341,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 
