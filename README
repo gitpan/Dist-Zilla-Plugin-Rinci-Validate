@@ -3,7 +3,7 @@ NAME
     output code
 
 VERSION
-    version 0.11
+    version 0.12
 
 SYNOPSIS
     In dist.ini:
@@ -53,6 +53,10 @@ DESCRIPTION
     code, at location marked with "# VALIDATE_ARG" or "# VALIDATE_ARGS".
     Validation code is compiled using "Data::Sah" from Sah schemas specified
     in "args" property in "Rinci" function metadata in the module.
+
+    This plugin detects the more recently developed plugin
+    Dist::Zilla::Plugin::Rinci::Wrap and will skip running if the latter is
+    loaded.
 
   USAGE
     To validate a single argument, in your module:
@@ -159,7 +163,7 @@ AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Steven Haryanto.
+    This software is copyright (c) 2014 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

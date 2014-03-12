@@ -13,10 +13,10 @@ $plc->indent_character('');
 my $pa  = Perinci::Access::Perl->new(
     load               => 0,
     cache_size         => 0,
-    extra_wrapper_args => {remove_internal_properties=>0},
+    extra_wrapper_args => {_remove_internal_properties=>0},
 );
 
-our $VERSION = '0.11'; # VERSION
+our $VERSION = '0.12'; # VERSION
 
 use Moose;
 use experimental 'smartmatch';
@@ -41,6 +41,11 @@ sub __squish_code {
 
 sub munge_files {
     my $self = shift;
+
+    if ($self->zilla->plugin_named('Rinci::Wrap')) {
+        $self->log('Rinci::Wrap plugin detected, will skip running');
+        return;
+    }
 
     $self->munge_file($_) for @{ $self->found_files };
     return;
@@ -341,7 +346,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -393,6 +398,10 @@ This plugin inserts argument validation code into your module source code, at
 location marked with C<# VALIDATE_ARG> or C<# VALIDATE_ARGS>. Validation code is
 compiled using C<Data::Sah> from Sah schemas specified in C<args> property in
 C<Rinci> function metadata in the module.
+
+This plugin detects the more recently developed plugin
+L<Dist::Zilla::Plugin::Rinci::Wrap> and will skip running if the latter is
+loaded.
 
 =head2 USAGE
 
@@ -506,7 +515,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
