@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use Data::Sah;
-use Perinci::Access::Perl 0.54;
+use Perinci::Access::Perl;
 
 my $sah = Data::Sah->new();
 my $plc = $sah->get_compiler("perl");
@@ -13,10 +13,9 @@ $plc->indent_character('');
 my $pa  = Perinci::Access::Perl->new(
     load               => 0,
     cache_size         => 0,
-    extra_wrapper_args => {_remove_internal_properties=>0},
 );
 
-our $VERSION = '0.12'; # VERSION
+our $VERSION = '0.13'; # VERSION
 
 use Moose;
 use experimental 'smartmatch';
@@ -74,7 +73,6 @@ sub munge_file {
     eval { require $reqname };
     if ($@) {
         $self->log_fatal("$fname: has compile errors: $@");
-        return;
     }
 
     my @content = split /^/, $file->content;
@@ -229,7 +227,6 @@ sub munge_file {
                 $self->log_fatal(
                     "$fname: can't child_metas => $uri: ".
                         "$res->[0] - $res->[2]");
-                return;
             }
             $metas = $res->[2];
             next;
@@ -346,7 +343,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-version 0.12
+This document describes version 0.13 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-04-30.
 
 =head1 SYNOPSIS
 

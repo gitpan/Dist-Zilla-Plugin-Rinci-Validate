@@ -1,5 +1,12 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.13     2014-04-30 (SHARYANTO)
+
+         - Adjust to Perinci::Access::Perl 0.66 (no longer has
+           extra_wrapper_args, but remove_internal_properties is now off by
+           default in Perinci::Sub::Normalize).
+
+
 0.12     2014-03-08 (SHARYANTO)
 
          - Skip running if DZP::Rinci::Wrap is loaded.
