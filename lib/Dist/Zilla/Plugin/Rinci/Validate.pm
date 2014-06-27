@@ -15,7 +15,7 @@ my $pa  = Perinci::Access::Perl->new(
     cache_size         => 0,
 );
 
-our $VERSION = '0.13'; # VERSION
+our $VERSION = '0.14'; # VERSION
 
 use Moose;
 use experimental 'smartmatch';
@@ -218,7 +218,7 @@ sub munge_file {
             $in_pod++;
             next;
         }
-        if (/^\s*package \s+ (\w+(?:::\w+)*)/x) {
+        if (/^\s*package \s+ (\w+(?:::\w+)*) \s*;/x) {
             $pkg_name = $1;
             $self->log_debug("Found package declaration $pkg_name");
             my $uri = "pl:/$pkg_name/"; $uri =~ s!::!/!g;
@@ -343,7 +343,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-This document describes version 0.13 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-04-30.
+This document describes version 0.14 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-06-27.
 
 =head1 SYNOPSIS
 

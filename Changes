@@ -1,5 +1,10 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.14     2014-06-27 (SHARYANTO)
+
+         - Fix regex for package declaration so false positives are reduced.
+
+
 0.13     2014-04-30 (SHARYANTO)
 
          - Adjust to Perinci::Access::Perl 0.66 (no longer has
