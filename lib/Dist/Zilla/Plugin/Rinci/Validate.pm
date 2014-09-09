@@ -15,7 +15,7 @@ my $pa  = Perinci::Access::Perl->new(
     cache_size         => 0,
 );
 
-our $VERSION = '0.14'; # VERSION
+our $VERSION = '0.15'; # VERSION
 
 use Moose;
 use experimental 'smartmatch';
@@ -99,11 +99,10 @@ sub munge_file {
             $self->log("NOTICE: $fname: Some argument(s) not validated ".
                            "for sub $sub_name: ".
                                join(", ", sort keys %unvalidated));
-        } elsif ((grep {$_==1} values %vargs) &&
-                     !defined($meta->{"_perinci.sub.wrapper.validate_args"})) {
+        } elsif (!$meta->{"x.perinci.sub.wrapper.disable_validate_args"}) {
             $self->log(
                 "NOTICE: $fname: You might want to set ".
-                    "_perinci.sub.wrapper.validate_args => 0 in metadata ".
+                    "x.perinci.sub.wrapper.disable_validate_args => 1 in metadata ".
                         "for sub $sub_name");
         }
     };
@@ -343,7 +342,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-This document describes version 0.14 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-06-27.
+This document describes version 0.15 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-09-06.
 
 =head1 SYNOPSIS
 
@@ -377,7 +376,7 @@ output will be something like:
  sub foo {
      my %args = @_;
 
-     my $arg1 = $args{arg1}; require Scalar::Util; my $arg_err; (($arg1 //= 3), 1) && ((defined($arg1)) ? 1 : (($err_arg1 = 'TMPERRMSG: required data not specified'),0)) && ((Scalar::Util::looks_like_number($arg1) =~ /^(?:1|2|9|10|4352)$/) ? 1 : (($err_arg1 = 'TMPERRMSG: type check failed'),0)); return [400, "Invalid value for arg1: $err_arg1"] if $arg1; # VALIDATE_ARG
+     my $arg1 = $args{arg1}; require Scalar::Util::Numeric; my $arg_err; (($arg1 //= 3), 1) && ((defined($arg1)) ? 1 : (($err_arg1 = 'TMPERRMSG: required data not specified'),0)) && ((Scalar::Util::Numeric::isint($arg1)) ? 1 : (($err_arg1 = 'TMPERRMSG: type check failed'),0)); return [400, "Invalid value for arg1: $err_arg1"] if $arg1; # VALIDATE_ARG
      ...
  }
 
@@ -424,10 +423,11 @@ There should only be one VALIDATE_ARGS per subroutine.
 
 If you use this plugin, and you plan to wrap your functions too using
 L<Perinci::Sub::Wrapper> (or through L<Perinci::Access>, L<Perinci::CmdLine>,
-etc), you might also want to put C<< _perinci.sub.wrapper.validate_args => 0 >>
-attribute into your function metadata, to instruct Perinci::Sub::Wrapper to skip
-generating argument validation code when your function is wrapped, as argument
-validation is already done by the generated code.
+etc), you might also want to put C<< x.perinci.sub.wrapper.disable_validate_args
+=> 1 >> attribute into your function metadata, to instruct
+L<Perinci::Sub::Wrapper> to skip generating argument validation code when your
+function is wrapped, as argument validation is already done by the generated
+code.
 
 If there is an unvalidated argument, this plugin will emit a warning notice. To
 skip validating an argument (silence the warning), you can use:
@@ -508,11 +508,11 @@ feature.
 
 =head1 AUTHOR
 
-Steven Haryanto <stevenharyanto@gmail.com>
+perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Steven Haryanto.
+This software is copyright (c) 2014 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

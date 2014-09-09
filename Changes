@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.15    2014-09-06 (PERLANCAR)
+
+	- Adjust to Perinci::Sub::Wrapper 0.62
+	  (_perinci.sub.wrapper.validate_args is now renamed).
+
+
 0.14     2014-06-27 (SHARYANTO)
 
          - Fix regex for package declaration so false positives are reduced.
