@@ -1,5 +1,12 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.18    2014-09-12 (PERLANCAR)
+
+	- No functional changes.
+
+	- Fix syntax error (d'oh).
+
+
 0.17    2014-09-12 (PERLANCAR)
 
 	- No functional changes.

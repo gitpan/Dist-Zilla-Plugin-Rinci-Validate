@@ -1,7 +1,7 @@
 package Dist::Zilla::Plugin::Rinci::Validate;
 
 our $DATE = '2014-09-12'; # DATE
-our $VERSION = '0.17'; # VERSION
+our $VERSION = '0.18'; # VERSION
 
 use 5.010001;
 use strict;
@@ -107,7 +107,7 @@ sub munge_file {
     my $gen_err = sub {
         my ($status, $msg, $cond) = @_;
         if ($meta->{result_naked}) {
-            return qq[if ($cond) { die "].$sub_name.q[(): $msg" } ];
+            return qq[if ($cond) { die "$sub_name(): " . $msg } ];
         } else {
             return qq|if ($cond) { return [$status, $msg] } |;
         }
@@ -332,7 +332,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-This document describes version 0.17 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-09-12.
+This document describes version 0.18 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-09-12.
 
 =head1 SYNOPSIS
 
