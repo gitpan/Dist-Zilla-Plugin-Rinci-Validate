@@ -1,5 +1,14 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.16    2014-09-12 (PERLANCAR)
+
+	- Bugfix: allow args_as=array/whatever if we're validating arg one
+	  by one.
+
+	- Bugfix: Avoid use of Perinci::Access::Perl to avoid changing
+	  result_naked, args_as.
+
+
 0.15    2014-09-06 (PERLANCAR)
 
 	- Adjust to Perinci::Sub::Wrapper 0.62

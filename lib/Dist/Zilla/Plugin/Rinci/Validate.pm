@@ -1,21 +1,18 @@
 package Dist::Zilla::Plugin::Rinci::Validate;
 
+our $DATE = '2014-09-12'; # DATE
+our $VERSION = '0.16'; # VERSION
+
 use 5.010001;
 use strict;
 use warnings;
 
 use Data::Sah;
-use Perinci::Access::Perl;
+use Perinci::Sub::Normalize qw(normalize_function_metadata);
 
 my $sah = Data::Sah->new();
 my $plc = $sah->get_compiler("perl");
 $plc->indent_character('');
-my $pa  = Perinci::Access::Perl->new(
-    load               => 0,
-    cache_size         => 0,
-);
-
-our $VERSION = '0.15'; # VERSION
 
 use Moose;
 use experimental 'smartmatch';
@@ -157,11 +154,7 @@ sub munge_file {
         my @code;
         for my $arg (sort keys %{ $meta->{args} }) {
             my $as = $meta->{args}{$arg};
-            my $s = $meta->{args}{$arg}{schema};
-            my $sn;
-            if ($s) {
-                $sn = $sah->normalize_schema($s);
-            }
+            my $sn = $meta->{args}{$arg}{schema}; # already normalized by normalize_function_metadata()
             my $has_default = $sn && defined($sn->[1]{default});
             my $kvar; # var to access a hash key
             $kvar = $var; $kvar =~ s/.//;
@@ -218,16 +211,13 @@ sub munge_file {
             next;
         }
         if (/^\s*package \s+ (\w+(?:::\w+)*) \s*;/x) {
+            no strict 'refs';
             $pkg_name = $1;
             $self->log_debug("Found package declaration $pkg_name");
-            my $uri = "pl:/$pkg_name/"; $uri =~ s!::!/!g;
-            my $res = $pa->request(child_metas => $uri);
-            unless ($res->[0] == 200) {
-                $self->log_fatal(
-                    "$fname: can't child_metas => $uri: ".
-                        "$res->[0] - $res->[2]");
+            $metas = \%{"$pkg_name\::SPEC"};
+            for (keys %$metas) {
+                $metas->{$_} = normalize_function_metadata($metas->{$_});
             }
-            $metas = $res->[2];
             next;
         }
         if (/^\s*sub \s+ (\w+)/x) {
@@ -275,11 +265,11 @@ sub munge_file {
                     "$fname:$i: metadata for sub $sub_name is not v1.1 ".
                         "(currently only v1.1 is supported)");
             }
-            if (($meta->{args_as} // "hash") !~ /^hash(ref)?$/) {
+            if ($m{s} && ($meta->{args_as} // "hash") !~ /^hash(ref)?$/) {
                 $self->log_fatal(
                     "$fname:$i: metadata for sub $sub_name: ".
                         "args_as=$meta->{args_as} (sorry, currently only ".
-                            "args_as=hash/hashref supported)");
+                            "args_as=hash/hashref supported for validating all args at once (# VALIDATE_ARGS), try validating one arg at a time (# VALIDATE_ARG))");
             }
             unless ($meta->{args}) {
                 $self->log_fatal(
@@ -342,7 +332,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-This document describes version 0.15 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-09-06.
+This document describes version 0.16 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-09-12.
 
 =head1 SYNOPSIS
 
@@ -496,7 +486,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Dist-Zilla
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Dist-Zilla-Plugin-Rinci-Validate>.
+Source repository is at L<https://github.com/perlancar/perl-Dist-Zilla-Plugin-Rinci-Validate>.
 
 =head1 BUGS
 
