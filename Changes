@@ -1,5 +1,12 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.17    2014-09-12 (PERLANCAR)
+
+	- No functional changes.
+
+	- Tweak die message: add sub name prefix to make it clearer.
+
+
 0.16    2014-09-12 (PERLANCAR)
 
 	- Bugfix: allow args_as=array/whatever if we're validating arg one

@@ -3,7 +3,7 @@ NAME
     output code
 
 VERSION
-    This document describes version 0.16 of
+    This document describes version 0.17 of
     Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution
     Dist-Zilla-Plugin-Rinci-Validate), released on 2014-09-12.
 
