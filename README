@@ -3,9 +3,9 @@ NAME
     output code
 
 VERSION
-    This document describes version 0.18 of
+    This document describes version 0.19 of
     Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution
-    Dist-Zilla-Plugin-Rinci-Validate), released on 2014-09-12.
+    Dist-Zilla-Plugin-Rinci-Validate), released on 2014-10-29.
 
 SYNOPSIS
     In dist.ini:
@@ -137,6 +137,8 @@ FAQ
     might be added in the future.
 
 TODO
+    *   Support argument's submetadata and argument element's submetadata
+
     *   Use PPI instead of fragile regex.
 
     *   Option to not compress validator code to a single line.

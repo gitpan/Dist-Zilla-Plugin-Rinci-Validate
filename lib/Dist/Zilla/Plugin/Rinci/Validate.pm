@@ -1,7 +1,7 @@
 package Dist::Zilla::Plugin::Rinci::Validate;
 
-our $DATE = '2014-09-12'; # DATE
-our $VERSION = '0.18'; # VERSION
+our $DATE = '2014-10-29'; # DATE
+our $VERSION = '0.19'; # VERSION
 
 use 5.010001;
 use strict;
@@ -24,6 +24,14 @@ with (
         default_finders => [':InstallModules'],
     },
 );
+
+sub __squote {
+    require Data::Dumper;
+    my $res = Data::Dumper->new([shift])->
+        Purity(1)->Terse(1)->Deepcopy(1)->Indent(0)->Dump;
+    chomp $res;
+    $res;
+}
 
 sub __squish_code {
     my $code = shift;
@@ -154,8 +162,8 @@ sub munge_file {
         my @code;
         for my $arg (sort keys %{ $meta->{args} }) {
             my $as = $meta->{args}{$arg};
+            my $has_default_prop = exists($as->{default});
             my $sn = $meta->{args}{$arg}{schema}; # already normalized by normalize_function_metadata()
-            my $has_default = $sn && defined($sn->[1]{default});
             my $kvar; # var to access a hash key
             $kvar = $var; $kvar =~ s/.//;
             $kvar = join(
@@ -164,10 +172,8 @@ sub munge_file {
                 (($meta->{args_as} // "hash") eq "hashref" ? "->" : ""),
                 "{'$arg'}",
             );
-            if ($as->{req}) {
-                push @code, $gen_merr->("!exists($kvar)", $arg);
-            }
             if ($sn) {
+                my $has_sch_default = exists($sn->[1]{default});
                 my $dn = $arg; $dn =~ s/\W+/_/g;
                 my $cd = $plc->compile(
                     schema      => $sn,
@@ -189,11 +195,22 @@ sub munge_file {
                 }
                 push @code, 'my $arg_err; ' unless keys %vargs;
                 $vargs{$arg} = 1;
-                my $wrap = !$as->{req} && !$has_default;
-                push @code, "if (exists($kvar)) { " if $wrap;
-                push @code, __squish_code($cd->{result}), "; ";
-                push @code, $gen_verr->('$arg_err', $arg);
-                push @code, "}"                     if $wrap;
+                push @code, "if (exists($kvar)) { ";
+                push @code,     __squish_code($cd->{result}), "; ";
+                push @code,     $gen_verr->('$arg_err', $arg);
+                push @code, "}";
+                if ($has_sch_default) {
+                    push @code, " else { ";
+                    push @code,     "$kvar = ", __squote($sn->[1]{default}), ";";
+                    push @code, "}";
+                }
+            } elsif ($has_default_prop) {
+                # no schema is defined, but there is 'default' property
+                push @code, "$kvar //= ", __squote($as->{default}), ";";
+            }
+
+            if ($as->{req}) {
+                push @code, $gen_merr->("!exists($kvar)", $arg);
             }
         }
         join "", @code;
@@ -332,7 +349,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-This document describes version 0.18 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-09-12.
+This document describes version 0.19 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-10-29.
 
 =head1 SYNOPSIS
 
@@ -469,6 +486,8 @@ option to not compress everything as a single line might be added in the future.
 =head1 TODO
 
 =over
+
+=item * Support argument's submetadata and argument element's submetadata
 
 =item * Use L<PPI> instead of fragile regex.
 

@@ -1,5 +1,11 @@
 Revision history for Dist-Zilla-Rinci-Validate
 
+0.19    2014-10-29 (PERLANCAR)
+
+	- [Bugfix] Schema default and default from 'default' argument spec
+	  property were not applied.
+
+
 0.18    2014-09-12 (PERLANCAR)
 
 	- No functional changes.
