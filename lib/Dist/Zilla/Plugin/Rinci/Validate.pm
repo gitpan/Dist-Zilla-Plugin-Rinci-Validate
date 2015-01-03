@@ -1,7 +1,7 @@
 package Dist::Zilla::Plugin::Rinci::Validate;
 
-our $DATE = '2014-10-29'; # DATE
-our $VERSION = '0.19'; # VERSION
+our $DATE = '2015-01-03'; # DATE
+our $VERSION = '0.20'; # VERSION
 
 use 5.010001;
 use strict;
@@ -349,7 +349,7 @@ Dist::Zilla::Plugin::Rinci::Validate - Insert argument validator code in output 
 
 =head1 VERSION
 
-This document describes version 0.19 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2014-10-29.
+This document describes version 0.20 of Dist::Zilla::Plugin::Rinci::Validate (from Perl distribution Dist-Zilla-Plugin-Rinci-Validate), released on 2015-01-03.
 
 =head1 SYNOPSIS
 
@@ -483,29 +483,13 @@ Admittedly, yes. Validation source code is formatted as a single long line to
 avoid modifying line numbers, which is desirable when debugging your modules. An
 option to not compress everything as a single line might be added in the future.
 
-=head1 TODO
-
-=over
-
-=item * Support argument's submetadata and argument element's submetadata
-
-=item * Use L<PPI> instead of fragile regex.
-
-=item * Option to not compress validator code to a single line.
-
-=item * Option to configure variable name to store validation (C<$arg_err>).
-
-=item * Option to reuse code for the same schema.
-
-=back
-
 =head1 HOMEPAGE
 
 Please visit the project's homepage at L<https://metacpan.org/release/Dist-Zilla-Plugin-Rinci-Validate>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Dist-Zilla-Plugin-Rinci-Validate>.
+Source repository is at L<https://github.com/sharyanto/perl-Dist-Zilla-Plugin-Rinci-Validate>.
 
 =head1 BUGS
 
@@ -521,7 +505,7 @@ perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by perlancar@cpan.org.
+This software is copyright (c) 2015 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
